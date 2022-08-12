@@ -14,8 +14,6 @@
 public class Solution {
     public bool IsValidBST(TreeNode root) {
         
-        
-        
         if (root.left != null)
         {
             if(checkValidity(root.left, null, root.val) == false)
@@ -37,16 +35,13 @@ public class Solution {
     
     public bool checkValidity(TreeNode root, int? min, int? max)
     {
-        Console.WriteLine("Node: " + root.val + ", Min: " + min + ", Max: " + max);
         if ((root.val <= min) || (root.val >= max))
         {
-            Console.WriteLine("Broken Condition");
             return false;
         }        
         
         if (root.left != null)
         {
-            
             if(checkValidity(root.left, min, root.val) == false)
             {
                 return false;
