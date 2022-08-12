@@ -13,94 +13,55 @@
  */
 public class Solution {
     public bool IsValidBST(TreeNode root) {
-		
-		// Checking Left Nodes
-		if (root.left != null)
-		{	
-            if (IsValidBST(root.left) == false)
-            {
-                return false;
-            }
-            
-            if (root.left.val >= root.val)
-            {
-                return false;
-            }
-            
-			if(checkLeftLeaves(root.left, root.val) == false)
-            {
-                return false;
-            }
-            
-		}
         
-        // Checking Right Nodes
-		if (root.right != null)
-		{	
-            if (IsValidBST(root.right) == false)
-            {
-                return false;
-            }
-            
-            if (root.right.val <= root.val)
-            {
-                return false;
-            }
-            
-			if(checkRightLeaves(root.right, root.val) == false)
-            {
-                return false;
-            }
-            
-		}
-		
-		return true;
         
+        
+        if (root.left != null)
+        {
+            if(checkValidity(root.left, null, root.val) == false)
+            {
+                return false;
+            }
+        }
+        
+        if (root.right != null)
+        {
+            if(checkValidity(root.right, root.val, null) == false)
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    public bool checkValidity(TreeNode root, int? min, int? max)
+    {
+        Console.WriteLine("Node: " + root.val + ", Min: " + min + ", Max: " + max);
+        if ((root.val <= min) || (root.val >= max))
+        {
+            Console.WriteLine("Broken Condition");
+            return false;
+        }        
+        
+        if (root.left != null)
+        {
+            
+            if(checkValidity(root.left, min, root.val) == false)
+            {
+                return false;
+            }
+        }
+        
+        if (root.right != null)
+        {
+            if(checkValidity(root.right, root.val, max) == false)
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 	
-	public bool checkLeftLeaves(TreeNode node, int rootValue)
-	{
-		bool flag = true;
-		
-		if (node.val >= rootValue)
-		{
-			flag = false;
-		}
-		
-		if ((node.left != null) && (flag == true))
-		{
-			flag = checkLeftLeaves(node.left, rootValue);
-		}
-		
-		if ((node.right != null) && (flag == true))
-		{
-			flag = checkLeftLeaves(node.right, rootValue);
-		}
-		
-		return flag;
-	}
-    
-    public bool checkRightLeaves(TreeNode node, int rootValue)
-	{
-		bool flag = true;
-		
-        Console.WriteLine(node.val);
-        
-		if (node.val <= rootValue)
-		{
-			flag = false;
-		}
-		
-		if ((node.left != null) && (flag == true))
-		{
-			flag = checkRightLeaves(node.left, rootValue);
-		}
-		
-		if ((node.right != null) && (flag == true))
-		{
-			flag = checkRightLeaves(node.right, rootValue);
-		}
-		
-		return flag;
-	}
 }
