@@ -4,6 +4,8 @@ public class Solution {
         IList<IList<int>> Output = new List<IList<int>>();
         bool flag;
         
+        //Array.Sort(nums);
+        
         // Checking for more than two
                 
         for (int i = 0; i < nums.Length; i++)
@@ -18,11 +20,7 @@ public class Solution {
                         {
                             if (nums[i] + nums[j] + nums[k] == 0)
                             {
-                                List<int> entry = new List<int>();
-
-                                entry.Add(nums[i]);
-                                entry.Add(nums[j]);
-                                entry.Add(nums[k]);
+                                List<int> entry = new List<int>(){nums[i], nums[j], nums[k]};
                                 
                                 entry.Sort();
                                 
@@ -40,6 +38,7 @@ public class Solution {
                                 if (flag == true)
                                 {
                                     Output.Add(entry); 
+                                    break;
                                 }
                             }
                         }
