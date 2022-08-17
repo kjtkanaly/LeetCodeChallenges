@@ -6,7 +6,7 @@ public class Solution {
     
     public int UniqueMorseRepresentations(string[] words) {
         
-        List<string> uniqueCodes = new List<string>();
+        string[] uniqueCodes = new string[words.Length];
         
         for (int i = 0; i < words.Length; i++)
         {
@@ -17,15 +17,11 @@ public class Solution {
             {
                 int index = Array.IndexOf(letters, s[j]);
                 
-                newCode = newCode + morseCode[index];
+                uniqueCodes[i] = uniqueCodes[i] + morseCode[index];
             }
             
-            if (uniqueCodes.Contains(newCode) == false)
-            {
-                uniqueCodes.Add(newCode);
-            }
         }
         
-        return uniqueCodes.Count;
+        return uniqueCodes.Distinct().Count();
     }
 }
