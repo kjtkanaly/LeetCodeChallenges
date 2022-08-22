@@ -7,44 +7,29 @@ public class Solution {
             return 0;
         }
         
-        int i = 0, j = height.Length, water = 0, currentI;
+        int water = 0;
+        int target = 1;
+        int start = Array.FindIndex(height, item => item > 0);
+        int end = Array.FindLastIndex(height, item => item > 0);
         
-        int maxHeight = height.Max();
-        int target    = maxHeight;
-        
-        while (target > 0)
-        {   
-            // Check to the right
-            int left = Array.IndexOf(height, maxHeight);            
-            int right = left + 1;            
-            
-            while (right < j)
+        // Getting local peaks
+        while (start < end)
+        {                
+            for (int index = start + 1; index < end; index++)
             {
-                if (height[right] >= target)
+                if (height[index] <= 0)
                 {
-                    water += (right - left - 1);
-                    left = right;
+                    water++;
                 }
-                right++;
+                
+                height[index]--;
             }
             
-            // Check to the left
-            right = Array.IndexOf(height, maxHeight);            
-            left = right - 1;
+            height[start]--;
+            height[end]--;
             
-            while (left > -1)
-            {
-                if (height[left] >= target)
-                {
-                    water += (right - left - 1);
-                    right = left;
-                }
-                left--;
-            }
-            
-            // Lower target
-            target--;
-            
+            start = Array.FindIndex(height, item => item > 0);
+            end = Array.FindLastIndex(height, item => item > 0);
         }
             
         return water;
