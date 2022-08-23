@@ -1,50 +1,84 @@
 public class Solution {
     public int CharacterReplacement(string s, int k) {
         
-        int Output = k;
-        
-        char max = s.GroupBy(x => x).OrderByDescending(x => x.Count()).First().Key;
-        
-        int maxIndex = s.IndexOf(max, 0);   
-        
-        while (maxIndex != -1)
+        // Default
+        if (k == s.Length)
         {
-            Console.WriteLine("Starting Index: " + maxIndex);
-            
-            int count = 0, index = maxIndex;
-            
-            while ((count < k) && (index < s.Length))
-            {
-                if (s[index] != max)
-                {
-                    count++;
-                }
-                index++;
-                Console.WriteLine("   " + index);
-            }
-            
-            while ((index < s.Length) && (s[index] == max))
-            {
-                Console.WriteLine("   " + index);
-                index++;
-            }
-            
-            if (index - maxIndex > Output)
-            {
-                Output = index - maxIndex + 1;
-            }
-            
-            //Console.WriteLine(index - maxIndex);
-            
-            if (Output == s.Length)
-            {
-                return Output;
-            }
-            
-            maxIndex = s.IndexOf(max, maxIndex + 1);   
+            return s.Length;
         }
         
-        return Output;
+        int Output = k;
         
+        char[] sDist = s.Distinct().ToArray();
+        
+        for (int i = 0; i < sDist.Length; i++)
+        {            
+            // Find the first distinct letter
+            int index = s.IndexOf(sDist[i]);
+                
+            // Sliding the window to the right
+            while (index != -1)
+            {
+                int start = index;
+                int left  = start;
+                int right = start;
+                
+                int changeCount = 0;
+                
+                while (right < s.Length)
+                {
+                    if (s[right] != sDist[i])
+                    {
+                        if (changeCount < k)
+                        {
+                            changeCount++;   
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    right++;
+                }
+                
+                // If change count is still less than k
+                // We slide to the left now
+                if (changeCount < k)
+                {                    
+                    while (left > -1)
+                    {
+                        if (s[left] != sDist[i])
+                        {
+                            if (changeCount < k)
+                            {
+                                changeCount++;   
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        left--;
+                    }   
+                    
+                    left++;
+                }
+                
+                if (right - left > Output)
+                {
+                    Output = right - left;
+                    
+                    if (Output == s.Length)
+                    {
+                        return Output;
+                    }
+                }
+                
+                // Iterate to the next distinct letter
+                index = s.IndexOf(sDist[i], index + 1);
+            }
+        }
+        
+        return Output;        
     }
 }
