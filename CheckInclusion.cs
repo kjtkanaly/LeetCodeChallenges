@@ -1,6 +1,15 @@
 public class Solution {
     public bool CheckInclusion(string s1, string s2) {
     
+		// sort s1
+        
+        // take a winsow of size 1 from s2
+        // and sort that Window
+        
+        // check if the sorted window equal s1
+        // if it does then reutn true
+        // if not then shift the widnow down 1 index and repeat
+	
         List<char> c1Right = s1.ToArray().ToList();
         List<char> c1Left = s1.ToArray().ToList();
         
