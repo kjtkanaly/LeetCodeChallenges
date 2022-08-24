@@ -11,30 +11,31 @@ public class Solution {
         
         char[] td = t.Distinct().ToArray();
         
+        int start, right;
+        
         while (WindowSize <= s.Length)
         {  
-            int start = 0;
-            int right = start + WindowSize;
+            start = 0;
+            right = start + WindowSize;
             
-            while (start <= s.Length - WindowSize)
+            while (right <= s.Length)
             {
                 // Debug
                 //Console.WriteLine(s[start..right]);
-                    
-                bool flag = true;
+                //Console.WriteLine(new String(s[start..right].Except(t).ToArray()));
                 
                 for (int i = 0; i < td.Length; i++)
                 {
                     //Console.WriteLine(s[start..right].ToCharArray().Count(c => c == td[i]));
                     if (s[start..right].ToCharArray().Count(c => c == td[i]) < t.ToCharArray().Count(c => c == td[i]))
                     {
-                        flag = false;
+                        break;
                     }
-                }
-                
-                if (flag == true)
-                {
-                    return s[start..right];
+                    
+                    if (i == td.Length - 1)
+                    {
+                        return s[start..right];    
+                    }
                 }
 
                 start++;
@@ -43,7 +44,6 @@ public class Solution {
             WindowSize++;
         }
 
-        
         return "";
     }
     
