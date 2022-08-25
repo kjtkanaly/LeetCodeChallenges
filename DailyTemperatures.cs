@@ -5,11 +5,11 @@ public class Solution {
         
         for (int i = 0; i < temperatures.Length - 1; i++)
         {
-            int[] temp = temperatures[(i + 1)..(temperatures.Length)].Where(x => x > temperatures[i]).ToArray();
+            int index = Array.FindIndex(temperatures, i+1, x => x > temperatures[i]);
             
-            if (temp.Length > 0)
+            if (index != -1)
             {
-                answer[i] = Array.IndexOf(temperatures, temp[0], i + 1) - i;   
+                answer[i] = index - i;
             }
         }
         
