@@ -9,10 +9,13 @@ public class Solution {
         
         List<int> temp = temperatures.ToList();
         int[] answer = new int[temp.Count];
+        int index = 0;
         
-        temp.Insert(0, Int32.MinValue);        
+        temp.Insert(0, Int32.MinValue);   
         
-        for (int i = 1; i < temp.Count - 1; i++)
+        int limit = temp.Count - 1;
+        
+        for (int i = 1; i < limit; i++)
         {
             if (temp[i] == temp[i-1] && answer[i - 2] > 0)
             {
@@ -20,7 +23,7 @@ public class Solution {
             }
             else
             {
-                int index = temp.FindIndex(i+1, x => x > temp[i]);
+                index = temp.FindIndex(i+1, x => x > temp[i]);
             
                 if (index != -1)
                 {
