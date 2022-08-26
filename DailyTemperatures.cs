@@ -1,15 +1,31 @@
 public class Solution {
     public int[] DailyTemperatures(int[] temperatures) {
         
-        int[] answer = new int[temperatures.Length];
-        
-        for (int i = 0; i < temperatures.Length - 1; i++)
+        // Default
+        if (temperatures.Distinct().ToArray().Length == 1)
         {
-            int index = Array.FindIndex(temperatures, i+1, x => x > temperatures[i]);
-            
-            if (index != -1)
+            return new int[temperatures.Length];
+        }
+        
+        List<int> temp = temperatures.ToList();
+        int[] answer = new int[temp.Count];
+        
+        temp.Insert(0, Int32.MinValue);        
+        
+        for (int i = 1; i < temp.Count - 1; i++)
+        {
+            if (temp[i] == temp[i-1] && answer[i - 2] > 0)
             {
-                answer[i] = index - i;
+                answer[i - 1] = answer[i - 2] - 1;
+            }
+            else
+            {
+                int index = temp.FindIndex(i+1, x => x > temp[i]);
+            
+                if (index != -1)
+                {
+                    answer[i - 1] = index - i;
+                }   
             }
         }
         
