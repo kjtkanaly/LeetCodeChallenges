@@ -42,12 +42,12 @@ public class Solution {
         {
             if (HeadCopy.random != null)
             {
-                //Console.WriteLine(Values.IndexOf(HeadCopy.random.val));
+                Console.WriteLine(Nodes.Find(x => x == HeadCopy.random));
                 Randoms.Add(Values.IndexOf(HeadCopy.random.val));   
             }
             else
             {
-                //Console.WriteLine("null");
+                Console.WriteLine("null");
                 Randoms.Add(-1);
             }
             
