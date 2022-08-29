@@ -17,7 +17,7 @@ public class Solution {
         int sz = 0;
         
         while (Node != null)
-        {
+        { 
             Values.Add(Node.val);
             
             sz++;
