@@ -37,21 +37,18 @@ public class LRUCache {
         
         if (i != -1)
         {
-            Keys.Insert(0, key);
-            Data.Insert(0, value);
-
-            Data.RemoveAt(i + 1);
-            Keys.RemoveAt(i + 1);   
+            Data.RemoveAt(i);
+            Keys.RemoveAt(i);   
         }
         
         else
-        {
-            Keys.Insert(0, key);
-            Data.Insert(0, value);
-            
+        {            
             Data.RemoveAt(Data.Count - 1);
             Keys.RemoveAt(Keys.Count - 1);      
         }
+        
+        Keys.Insert(0, key);
+        Data.Insert(0, value);
     }
 }
 
