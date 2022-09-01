@@ -27,21 +27,19 @@ public class Solution {
         return TreeValues.Min();
     }
     
-    public void TraverseTree(TreeNode root, int Depth = 0)
+    public void TraverseTree(TreeNode root)
     {
-        Depth++;
-
         TreeValues.Add(root.val);
-        //Console.WriteLine("Node " + root.val + ": " + Depth);
+        //Console.WriteLine("Node " + root.val);
         
         if (root.left != null)
         {
-            TraverseTree(root.left, Depth);
+            TraverseTree(root.left);
         }
         
         if (root.right != null)
         {
-            TraverseTree(root.right, Depth);
+            TraverseTree(root.right);
         }
         
         return;
