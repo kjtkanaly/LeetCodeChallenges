@@ -43,7 +43,7 @@ public class Solution {
         {
             int Left = 1;
             
-            if (RootNodeIndex == 2 && Nodes.Count == 3)
+            if (RootNodeIndex == 2 && Nodes.Count == 3 && Nodes[0].val < Nodes[1].val)
             {
                 Left = 0;
             }
@@ -85,17 +85,35 @@ public class Solution {
         if (RootNodeIndex < Nodes.Count - 2)
         {
             int Right = Nodes.Count - 2;
+            
+            if ((RootNodeIndex == 0) && Nodes.Count == 3 && Nodes[Nodes.Count - 1].val < Nodes[Nodes.Count - 2].val)
+            {
+                Right = Nodes.Count - 1;
+            }
+             
             while (Right != RootNodeIndex)
             {
-                Nodes[Right].right = Nodes[Right + 1];
-                Nodes.RemoveAt(Right + 1);
+                
+                if (Right + 1 < Nodes.Count)
+                {
+                    Nodes[Right].right = Nodes[Right + 1];
+                    Nodes.RemoveAt(Right + 1);
+                }
+                else
+                {
+                    Nodes[Right].right = null;
+                }
                 
                 if (Right - 1 != RootNodeIndex)
                 {
-                    Nodes[Right].left = Nodes[Right - 1];   
+                    Nodes[Right].left = Nodes[Right - 1];
                     Nodes.RemoveAt(Right - 1);
-                }               
-
+                }
+                else
+                {
+                    Nodes[Right].left = null;
+                }
+                
                 Right = Nodes.Count - 2;
             }
         }
