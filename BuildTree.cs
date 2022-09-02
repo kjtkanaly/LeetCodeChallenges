@@ -27,68 +27,92 @@ public class Solution {
         
         int RootValue = preorder[0];
         
-        int RootIndexInOrder = Array.IndexOf(inorder,RootValue);
-        Console.WriteLine("Root Index: " + RootIndexInOrder);
+        int RootNodeIndex = Array.IndexOf(inorder,RootValue);
+        Console.WriteLine("Root Index: " + RootNodeIndex);
+        Console.Write("\n");
         
         // Initalize Nodes
         List<TreeNode> Nodes = new List<TreeNode>(inorder.Length);
         for (int i = 0; i < inorder.Length; i++)
         {
             Nodes.Add(new TreeNode(inorder[i]));
-        }
+        }        
         
-        // Default 2 electric boogaloo
-        if (inorder.Length == 2)
-        {
-            if (RootIndexInOrder == 1)
-            {
-                Nodes[1].left = Nodes[0];
-                return Nodes[1];
-            }
-            else
-            {
-                Nodes[0].right = Nodes[1];
-                return Nodes[0];
-            }
-        }
-        
-        Console.Write("\n");
-        
-        if (RootIndexInOrder != 0)
+           
+        if (RootNodeIndex > 1)
         {
             int Left = 1;
-            while (Nodes[Left].val != RootValue && Nodes[Left + 1].val != RootValue)
+            
+            if (RootNodeIndex == 2 && Nodes.Count == 3)
             {
-                Nodes[Left].left = Nodes[Left - 1];
-                Nodes[Left].right = Nodes[Left + 1];
-
-                Nodes.RemoveAt(Left + 1);
-                Nodes.RemoveAt(Left - 1);
+                Left = 0;
             }
-        }
+            
+            while (Left != RootNodeIndex)
+            {
 
-        Console.WriteLine("beep");
+                if (Left + 1 != RootNodeIndex)
+                {
+                    Nodes[Left].right = Nodes[Left + 1];
+                    Nodes.RemoveAt(Left + 1);
+                    RootNodeIndex--;
+                }
+                else
+                {
+                    Nodes[Left].right = null;
+                }
+                
+                
+                if (Left == 1)
+                {
+                    Nodes[Left].left = Nodes[Left - 1];
+                    Nodes.RemoveAt(Left - 1);
+                    RootNodeIndex--;
+                }
+                else
+                {
+                    Nodes[Left].left = null;
+                }
+                
+                if (Left == 0)
+                {
+                    Left = 1;
+                }
+                
+            }   
+        }
         
-        if (RootIndexInOrder != inorder.Length - 1)
+        if (RootNodeIndex < Nodes.Count - 2)
         {
             int Right = Nodes.Count - 2;
-            while (Nodes[Right].val != RootValue && Nodes[Right - 1].val != RootValue)
+            while (Right != RootNodeIndex)
             {
-                Nodes[Right].left = Nodes[Right - 1];
                 Nodes[Right].right = Nodes[Right + 1];
-
                 Nodes.RemoveAt(Right + 1);
-                Nodes.RemoveAt(Right - 1);
+                
+                if (Right - 1 != RootNodeIndex)
+                {
+                    Nodes[Right].left = Nodes[Right - 1];   
+                    Nodes.RemoveAt(Right - 1);
+                }               
 
                 Right = Nodes.Count - 2;
             }
         }
-        
-        Nodes[1].left = Nodes[0];   
-        Nodes[1].right = Nodes[2];   
-        Nodes.RemoveAt(0);
-        Nodes.RemoveAt(1);
 
+        Console.WriteLine("Root Index: " + RootNodeIndex);
+        
+        if (RootNodeIndex != Nodes.Count - 1)
+        {
+            Nodes[RootNodeIndex].right = Nodes[RootNodeIndex + 1];     
+            Nodes.RemoveAt(RootNodeIndex + 1);   
+        }
+        
+        if (RootNodeIndex != 0)
+        {
+            Nodes[RootNodeIndex].left = Nodes[RootNodeIndex - 1];       
+            Nodes.RemoveAt(RootNodeIndex - 1);
+        }       
         
         return Nodes[0];
     }
