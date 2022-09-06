@@ -1,25 +1,32 @@
 public class Solution {
+    
+    class Cord
+    {
+        public double radi;
+        public int[] cord;
+        
+        public Cord(double radiValue, int[] CordValues)
+        {
+            radi = radiValue;
+            cord = CordValues;
+        }
+    }
+    
     public int[][] KClosest(int[][] points, int k) {
         
         int[][] Output =  new int[k][];
-        List<int[]> Points = points.ToList();
-        List<double> Radi = new List<double>(points.Length);
+        
+        List<Cord> Data = new List<Cord>(points.Length);
         
         for (int i = 0; i < points.Length; i++)
         {
-            Radi.Add(Math.Sqrt(Math.Pow(Points[i][0], 2) + Math.Pow(Points[i][1], 2)));
+            Data.Add(new Cord(Math.Sqrt(Math.Pow(points[i][0], 2) + Math.Pow(points[i][1], 2)), new int[2]{points[i][0], points[i][1]}) );
         }
         
-        for (int i = 0; i < k; i++)
-        {
-            int MinIndex = Radi.IndexOf(Radi.Min());
-            
-            Output[i] = new int[2]{Points[MinIndex][0], Points[MinIndex][1]};
-            
-            Points.RemoveAt(MinIndex);
-            Radi.RemoveAt(MinIndex);
-        }
+        Data = Data.OrderBy(data => data.radi).ToList();
         
-        return Output;
+        Data.RemoveRange(k, Data.Count - k);
+        
+        return Data.Select(x => x.cord).ToArray();
     }
 }
