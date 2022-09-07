@@ -1,38 +1,20 @@
 public class Solution {
-    public IList<IList<int>> Subsets(int[] nums) {
-        
-        IList<IList<int>> Output = new List<IList<int>>();
-        
-        // Default
-        Output.Add(new List<int>(0));
-        
-        if (nums.Length > 1)
+    public IList<IList<int>> Subsets(int[] nums) 
+    {        
+        IList<IList<int>> result = new List<IList<int>>();
+        result.Add(new List<int>());
+
+        foreach(var num in nums)
         {
-            for (int i = 0; i < nums.Length; i++)
+            int currentCount = result.Count;
+            for(int i = 0; i < currentCount; i++)
             {
-                Output.Add(new List<int>(1){nums[i]});
-            }
+                List<int> subset = result[i].ToList();
+                subset.Add(num);
+                result.Add(subset);                
+            }            
         }
-        
-        if (nums.Length > 2)
-        {
-            int left = 0;
-            
-            while (left < nums.Length - 1)
-            {
-                int right = left + 1;
-                
-                while (right < nums.Length)
-                {
-                    Output.Add(new List<int>(2){nums[left], nums[right]});
-                    
-                    right++;
-                }
-                
-                left++;
-            }
-        }
-        
-        return Output;
+
+        return result;
     }
 }
