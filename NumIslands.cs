@@ -1,4 +1,7 @@
 public class Solution {
+    
+    public int IslandCount = 2;
+    
     public int NumIslands(char[][] grid) {
 
         // Default
@@ -13,8 +16,7 @@ public class Solution {
                 return 0;
             }
         }
-            
-        
+
         // Zero Pad out grid's border
         int[,] GridPad = new int[grid.Length + 2, grid[0].Length + 2]; 
         for (int row = 1; row < GridPad.GetLength(0) - 1; row++)
@@ -31,36 +33,24 @@ public class Solution {
                 }
             }
         }
-
-        int IslandCount = 1;
         
+        ///////////////////////////////////////////////////////////////
+        // WorkZone
+
         for (int row = 1; row < GridPad.GetLength(0) - 1; row++)
         {
             for (int col = 1; col < GridPad.GetLength(1) - 1; col++)
             {
                 if (GridPad[row,col] == 1)
                 {
-                    // Check the neighboring ones
-                    if (GridPad[row + 1,col] == IslandCount || GridPad[row - 1,col] == IslandCount || 
-                        GridPad[row,col - 1]  == IslandCount || GridPad[row,col + 1] == IslandCount)
-                    {
-                        GridPad[row,col] = IslandCount;
-                    }
+                    FindNeighbors(GridPad, row, col);
                     
-                    if (GridPad[row + 1,col] == 1 || GridPad[row - 1,col] == 1 || 
-                        GridPad[row,col - 1]  == 1 || GridPad[row,col + 1] == 1)
-                    {
-                        GridPad[row,col] = IslandCount;
-                    }
-                    
-                    else
-                    {
-                        IslandCount++;
-                    }
+                    IslandCount++;
                 }
             }
         }
         
+        ///////////////////////////////////////////////////////////////
         // Debug
         for (int row = 0; row < GridPad.GetLength(0); row++)
         {
@@ -73,6 +63,31 @@ public class Solution {
         
         Console.Write("\n");
         
-        return IslandCount;
+        return IslandCount - 2;
+    }
+    
+    public void FindNeighbors(int[,] Grid, int row, int col)
+    {
+        Grid[row,col] = IslandCount;
+        
+        if (Grid[row - 1,col] == 1)
+        {
+            FindNeighbors(Grid, row - 1, col);
+        }
+        
+        if (Grid[row + 1,col] == 1)
+        {
+            FindNeighbors(Grid, row + 1, col);
+        }
+        
+        if (Grid[row,col - 1] == 1)
+        {
+            FindNeighbors(Grid, row, col - 1);
+        }
+        
+        if (Grid[row,col + 1] == 1)
+        {
+            FindNeighbors(Grid, row, col + 1);
+        }
     }
 }
