@@ -5,7 +5,7 @@ public class Solution {
     public int NumIslands(char[][] grid) {
 
         // Default
-        if (grid.Length == 1)
+        if (grid.Length == 1 && grid[0].Length == 1)
         {
             if (grid[0][0] == '1')
             {
