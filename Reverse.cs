@@ -1,34 +1,28 @@
 public class Solution {
     public int Reverse(int x) {
         
-        int modifier = 1;
-        int output = 0;
+        string s = x.ToString();
         
-        if (x < 0)
+        char[] c = s.ToCharArray();
+        Array.Reverse(c);
+        s = new string(c);
+        
+        if (s[s.Length - 1] == '-')
         {
-            x *= -1;
-            modifier = -1;
+            s = s.Remove(s.Length - 1);
+            s = "-" + s;
         }
         
-        int length = x.ToString().Length;
-        
-        for (int i = 0; i < length; i++)
+        int Output;
+        try
+        {       
+            Output = Convert.ToInt32(s);
+        }
+        catch
         {
-            int singlesValue = x % 10;
-            
-            output *= 10;
-            output += singlesValue;
-            
-            if (singlesValue != output % 10)
-            {
-                return 0;
-            }
-            
-            x /= 10;
+            Output = 0;
         }
         
-        output *= modifier;
-        
-        return output;      
+        return Output;
     }
 }
