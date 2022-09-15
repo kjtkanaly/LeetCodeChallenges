@@ -4,138 +4,57 @@ public class Solution {
         List<int[]> Intervals = intervals.ToList();
         int LeftIndex = -1, RightIndex = -1;
         
-        // Default
-        if (intervals.Length == 0)
-        {
-            Intervals = intervals.ToList();
-            Intervals.Add(new int[2]{newInterval[0], newInterval[1]});
-            return Intervals.ToArray();
-        }        
-        
-        for (int i = 0; i < intervals.Length; i++)
-        {
-            List<int> Temp = intervals[i].ToList();
-            
-            if (Temp[0] <= newInterval[0] && Temp[1] >= newInterval[0])
-            {
-                LeftIndex = i;
-                break;
-            }
-        }
-        
-        for (int i = intervals.Length - 1; i > -1; i--)
-        {
-            List<int> Temp = intervals[i].ToList();
-            
-            if (Temp[0] <= newInterval[1] && Temp[1] >= newInterval[1])
-            {
-                RightIndex = i;
-                break;
-            }
-        }       
-        
-        Console.WriteLine("Left Index: " + LeftIndex);
-        Console.WriteLine("Right Index: " + RightIndex);
-        
-        if (LeftIndex != -1 && RightIndex == -1)
-        {
-            intervals[LeftIndex][1] = newInterval[1];
-        }
-        
-        else if (LeftIndex == -1 && RightIndex != -1)
-        {
-            intervals[RightIndex][0] = newInterval[0];
-        }
-        
-        else if (LeftIndex != -1 && RightIndex != -1)
-        {
-            if (LeftIndex < RightIndex)
-            {
-                Intervals = intervals.ToList();
-                
-                int Lower  = Math.Min(intervals[LeftIndex][0], newInterval[0]);
-                int Higher = Math.Max(intervals[RightIndex][1], newInterval[1]);
-                
-                Intervals.RemoveRange(LeftIndex, RightIndex - LeftIndex + 1);
-                
-                Intervals.Insert(LeftIndex, new int[2]{Lower, Higher});
-                
-                intervals = Intervals.ToArray();
-            }
-        }
-        else
-        {
-            Intervals = intervals.ToList();
-            
-            if (intervals[0][0] < newInterval[0] && intervals[intervals.Length - 1][1] > newInterval[1])
-            {
-                return intervals;
-            }
-            else if (intervals[0][0] > newInterval[0] && intervals[intervals.Length - 1][1] < newInterval[1])
-            {
-                Intervals = intervals.ToList();
-                Intervals.Clear();
-                Intervals.Add(newInterval);
-                return Intervals.ToArray();
-            }
-            
-            // Checking if the new interval fits inside one that already exist
-            for (int i = 0; i < intervals.Length; i++)
-            {
-                if (intervals[i][0] < newInterval[0] && intervals[i][1] > newInterval[1])
-                {
-                    return intervals;
-                }
-                
-                else if (intervals[i][0] > newInterval[0] && intervals[i][1] < newInterval[1])
-                {
-                    intervals[i] = newInterval;
-                    return intervals;
-                }
-            }
-            
-            
-            
-            int index = 0;
-                
-            for (int i = 0; i < Intervals.Count; i++)
-            {
-                if (Intervals[i][0] < newInterval[0])
-                {
-                    index = i + 1;
-                }
-            }
-            
-            Console.WriteLine("Index: " + index + "\n");
-            
-            Intervals.Insert(index, new int[2]{newInterval[0], newInterval[1]});
-            
-            
-            
-            intervals = Intervals.ToArray();
-        }
-        
-        Intervals = intervals.ToList();
-        
-        // Last Minute Check
+        // List the Left and Right Values
+        List<int> Left  = new List<int>();
+        List<int> Right = new List<int>();
         for (int i = 0; i < Intervals.Count; i++)
         {
-            int j = 0;
-            while (j < Intervals.Count)
+            Left.Add(intervals[i][0]);   
+            Right.Add(intervals[i][1]);   
+        }
+        
+        Left.Add(newInterval[0]);
+        Right.Add(newInterval[1]);
+        
+        Left.Sort();
+        Right.Sort();
+        
+        // Debug
+        for (int i = 0; i < Left.Count; i++)
+        {
+            Console.WriteLine(Left[i] + " , " + Right[i]);
+        }
+        Console.Write("\n");
+        
+        int index = 0;
+        while (index < Left.Count - 1)
+        {
+            if (Right[index] >= Left[index+1])
             {
-                if (Intervals[i][0] < Intervals[j][0] && Intervals[i][1] > Intervals[j][1])
-                {
-                    Intervals.RemoveAt(j);
-                }
-                else
-                {
-                    j++;
-                }
+                Right[index] = Right[index+1];
+                Left.RemoveAt(index+1);
+                Right.RemoveAt(index+1);
+            }
+            else
+            {
+                index++;
             }
         }
         
-        intervals = Intervals.ToArray();
+        // Debug
+        for (int i = 0; i < Left.Count; i++)
+        {
+            Console.WriteLine(Left[i] + " , " + Right[i]);
+        }
+        Console.Write("\n");
         
-        return intervals;
+        List<int[]> Output = new List<int[]>();
+        for (int i = 0; i < Left.Count; i++)
+        {
+            Output.Add(new int[2]{Left[i],Right[i]});
+        }
+        
+        
+        return Output.ToArray();
     }
 }
