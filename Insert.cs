@@ -1,15 +1,16 @@
 public class Solution {
     public int[][] Insert(int[][] intervals, int[] newInterval) {
         
+        List<int[]> Intervals = intervals.ToList();
+        int LeftIndex = -1, RightIndex = -1;
+        
         // Default
         if (intervals.Length == 0)
         {
-            List<int[]> Intervals = intervals.ToList();
+            Intervals = intervals.ToList();
             Intervals.Add(new int[2]{newInterval[0], newInterval[1]});
             return Intervals.ToArray();
-        }
-     
-        int LeftIndex = -1, RightIndex = -1;
+        }        
         
         for (int i = 0; i < intervals.Length; i++)
         {
@@ -50,7 +51,7 @@ public class Solution {
         {
             if (LeftIndex < RightIndex)
             {
-                List<int[]> Intervals = intervals.ToList();
+                Intervals = intervals.ToList();
                 
                 int Lower  = Math.Min(intervals[LeftIndex][0], newInterval[0]);
                 int Higher = Math.Max(intervals[RightIndex][1], newInterval[1]);
@@ -64,7 +65,7 @@ public class Solution {
         }
         else
         {
-            List<int[]> Intervals = intervals.ToList();
+            Intervals = intervals.ToList();
             
             if (intervals[0][0] < newInterval[0] && intervals[intervals.Length - 1][1] > newInterval[1])
             {
@@ -113,6 +114,27 @@ public class Solution {
             
             intervals = Intervals.ToArray();
         }
+        
+        Intervals = intervals.ToList();
+        
+        // Last Minute Check
+        for (int i = 0; i < Intervals.Count; i++)
+        {
+            int j = 0;
+            while (j < Intervals.Count)
+            {
+                if (Intervals[i][0] < Intervals[j][0] && Intervals[i][1] > Intervals[j][1])
+                {
+                    Intervals.RemoveAt(j);
+                }
+                else
+                {
+                    j++;
+                }
+            }
+        }
+        
+        intervals = Intervals.ToArray();
         
         return intervals;
     }
