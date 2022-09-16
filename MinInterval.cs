@@ -11,15 +11,37 @@ public class Solution {
         // Debug
         Console.WriteLine("Output Length: " + Output.Count);
         
-        for (int j = 0; j < Output.Count; j++)
+        Array.Sort(queries);
+        
+        // Initialize
+        for (int i = 0; i < intervals.Length; i++)
         {
-            for (int i = 0; i < intervals.Length; i++)
+            if (queries[0] >= intervals[i][0] && queries[0] <= intervals[i][1])
             {
-                if (queries[j] >= intervals[i][0] && queries[j] <= intervals[i][1])
+                Output[0] = Math.Min(Output[0], intervals[i][1] - intervals[i][0] + 1);
+            }
+        }    
+        
+        for (int j = 1; j < Output.Count; j++)
+        {
+            //Console.WriteLine(j);
+            
+            if (queries[j] != queries[j - 1])
+            {
+                for (int i = 0; i < intervals.Length; i++)
                 {
-                    Output[j] = Math.Min(Output[j], intervals[i][1] - intervals[i][0] + 1);
-                }
-            }    
+                    if (queries[j] >= intervals[i][0] && queries[j] <= intervals[i][1])
+                    {
+                        Output[j] = Math.Min(Output[j], intervals[i][1] - intervals[i][0] + 1);
+                    }
+                }    
+            }
+                
+            else
+            {
+                Output[j] = Output[j - 1];
+            }
+            
         }
         
         for (int i = 0; i < Output.Count; i++)
