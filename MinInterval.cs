@@ -11,7 +11,25 @@ public class Solution {
         // Debug
         Console.WriteLine("Output Length: " + Output.Count);
         
+        int[] Left  = new int[intervals.Length];
+        int[] Right = new int[intervals.Length];
+        
+        for (int i = 0; i < intervals.Length; i++)
+        {
+            Left[i] = intervals[i][0];
+            Right[i] = intervals[i][1];
+        }
+
         Array.Sort(queries);
+        Array.Sort(Left, Right);
+        
+        // Debug
+        for (int i = 0; i < intervals.Length; i++)
+        {
+            Console.WriteLine(Left[i] + " , " + Right[i]);
+        }
+        
+        
         
         // Initialize
         for (int i = 0; i < intervals.Length; i++)
