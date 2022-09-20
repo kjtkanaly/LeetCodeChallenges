@@ -1,18 +1,29 @@
 public class Solution {
     public int Rob(int[] nums) {
         
-        int previous = 0;
-        int total = 0;
-        
-        for (int i = 1; i < nums.Length; i++)
+        // Default
+        if (nums.Length == 1)
         {
-            int temp = total;
-            
-            total += Math.Max(nums[i], nums[i - 1] + nums[i + 1]);
-            
-            previous = temp;
+            return nums[0];
+        }
+        else if (nums.Length == 2)
+        {
+            return Math.Max(nums[0], nums[1]);
         }
         
-        return total;
+        int Dim_One = nums[1];
+        int Dim_Two = nums[0];
+        
+        int current = 0;
+        
+        for (int i = 2; i < nums.Length; i++)
+        {
+            current = Math.Max(nums[i] + Dim_Two, Dim_One);
+            
+            Dim_Two = Math.Max(Dim_Two, Dim_One);
+            Dim_One = current;
+        }
+        
+        return current;
     }
 }
