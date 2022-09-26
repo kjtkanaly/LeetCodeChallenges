@@ -1,7 +1,6 @@
 public class Solution {
-    
-    public int[]  Numbs;
-    public char[] Chars;
+
+    public Dictionary<int, char> Match = new Dictionary<int, char>();
     public List<string> Codes = new List<string>();
     
     public int NumDecodings(string s) {
@@ -12,79 +11,75 @@ public class Solution {
             return 0;
         }
         
-        // Number Array
-        Numbs = new int[26];
-        for (int i = 1; i <= 26; i++)
+        // Convert s to int array
+        int[] SN = new int[s.Length];
+        for (int i = 0; i < s.Length; i++)
         {
-            Numbs[i - 1] = i; 
+            SN[i] = Int32.Parse(s[i] + "");
         }
         
         // Letters Array
-        Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        char[] Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
         
-        Split(s, "");
+        // Populate the dictionary
+        for (int i = 1; i <= 26; i++)
+        {
+            Match.Add(i, Chars[i - 1]); 
+        }
+        
+        Split(SN, "");
         
         return Codes.Count;
     }
     
-    public void Split(string S, string New)   
+    public void Split(int[] SN, string New)   
     {                
         // Single Branch
-        if (S.Length > 0)
-        {            
-            int SingleIndex = Array.IndexOf(Numbs, Convert.ToInt32(new string(S[0], 1)));
-            
-            //Console.WriteLine(S[0] + " - " + SingleIndex);
-            
-            if (SingleIndex != -1)
+        if (SN.Length > 0)
+        {  
+            try
             {
-                string single = New + Chars[SingleIndex];
+                string single = New + Match[SN[0]];
                 
-                //Console.WriteLine(S);
-                //Console.WriteLine("S Length: " + S.Length);
-                
-                if (S.Length != 0)
+                if (SN.Length != 0)
                 {
-                    Split(S[1..S.Length], single);   
+                    Split(SN[1..SN.Length], single);   
                 }
                 
-                if (S.Length == 1)
+                if (SN.Length == 1)
                 {
                     //Console.WriteLine(single);
                     Codes.Add(single);
                 }
             }
-            else
+            catch
             {
+                Console.WriteLine("BeeP");
                 return;
             }
         }
         
-        
         // Double Branch
-        if (S.Length > 1)
-        {            
-            int DoubleIndex = Array.IndexOf(Numbs, Convert.ToInt32(S[0..2]));
-            
-            //Console.WriteLine(S[0..2] + " - " + DoubleIndex);
-            
-            if (DoubleIndex != -1)
+        if (SN.Length > 1)
+        {              
+            try
             {
-                string twice = New + Chars[DoubleIndex];
+                string twice = New + Match[10 * SN[0] + SN[1]];
                 
-                //Console.WriteLine(S);
-                //Console.WriteLine("S Length: " + S.Length);
-                
-                if (S.Length > 1)
+                if (SN.Length > 1)
                 {
-                    Split(S[2..S.Length], twice);   
+                    Split(SN[2..SN.Length], twice);   
                 }
                 
-                if (S.Length == 2)
+                if (SN.Length == 2)
                 {
                     //Console.WriteLine(twice);
                     Codes.Add(twice);
                 }
+            }
+            catch
+            {
+                
             }
         }
 
