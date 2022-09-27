@@ -1,64 +1,49 @@
 public class Solution {
     
     public List<int> Counts = new List<int>();
-    public bool Dig = true;
     
     public int CoinChange(int[] coins, int amount) {
         
-        int Count = 0;
-        
         Array.Sort(coins);
-        Array.Reverse(coins);
+
+        int total = 0;
+        int Count = Branch(coins, 0, amount);
         
-        Count = SubtractCoin(amount, 0, coins);
         
-        /*while (amount > 0)
-        {
-            bool Change = false;
-            
-            for (int i = 0; i < coins.Length; i++)
-            {
-                if (amount - coins[i] > -1)
-                {
-                    amount -= coins[i];
-                    Count++;
-                    Change = true;
-                    break;
-                }
-            }
-            
-            Console.WriteLine("Amount: " + amount);
-            Console.WriteLine("Count: " + Count);
-            
-            if (Change == false)
-            {
-                return -1;
-            }
-        }*/
         
-        return Count; 
+        return Count;
     }
     
-    public int SubtractCoin(int Goal, int Value, int[] coins, int count = 0)
+    public int Branch(int[] coins, int total, int goal, int count = 0)
     {
-        Console.WriteLine(Value);
         
-        if (Value == Goal)
+        if (total == goal)
         {
-            Counts.Add(count);
             Console.WriteLine(count);
-            Dig = false;
+            //Counts.Add(count);
             return count;
         }
-        
-        for (int i = 0; i < coins.Length; i++)
+        else if (total > goal)
         {
-            if (Value + coins[i] <= Goal && Dig == true)
+            return -1;
+        }
+        else
+        {
+            for (int i = coins.Length - 1; i > -1; i--)
             {
-                return Math.Max(SubtractCoin(Goal, Value + coins[i], coins, count++), count);
+                
+                int Depth = Branch(coins, total + coins[i], goal, count + 1);
+                //Console.WriteLine(Depth);
+                
+                if (Depth != -1)
+                {
+                    return Depth;
+                }
+                
             }
         }
         
         return -1;
     }
+    
 }
