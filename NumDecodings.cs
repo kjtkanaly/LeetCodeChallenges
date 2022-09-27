@@ -28,60 +28,62 @@ public class Solution {
         }
         
         Split(SN, "");
+        //Console.Write("\n");
+        
+        Codes = Codes.Distinct().ToList();
         
         return Codes.Count;
     }
     
-    public void Split(int[] SN, string New)   
-    {                
+    public void Split(int[] SN, string Code)
+    {
+        if (SN.Length == 0)
+        {
+            Console.WriteLine(Code);
+            Codes.Add(Code);
+        }
+
         // Single Branch
         if (SN.Length > 0)
-        {  
+        { 
+            // Single
+            //Console.WriteLine("Single: " + Match[SN[SN.Length - 1]] + Code);
             try
             {
-                string single = New + Match[SN[0]];
-                
+                string single = Match[SN[SN.Length - 1]] + Code;
+
                 if (SN.Length != 0)
                 {
-                    Split(SN[1..SN.Length], single);   
+                    Split(SN[(0)..(SN.Length - 1)], single);   
                 }
                 
-                if (SN.Length == 1)
-                {
-                    //Console.WriteLine(single);
-                    Codes.Add(single);
-                }
+
             }
             catch
             {
-                Console.WriteLine("BeeP");
-                return;
+
             }
         }
         
         // Double Branch
         if (SN.Length > 1)
-        {              
+        {     
+            // Double
+            //Console.WriteLine("Double: " + Match[SN[SN.Length - 2] + SN[SN.Length - 1]] + Code);
             try
             {
-                string twice = New + Match[10 * SN[0] + SN[1]];
-                
+                string twice = Match[10 * SN[SN.Length - 2] + SN[SN.Length - 1]] + Code;
+
                 if (SN.Length > 1)
                 {
-                    Split(SN[2..SN.Length], twice);   
+                    Split(SN[(0)..(SN.Length - 2)], twice);   
                 }
                 
-                if (SN.Length == 2)
-                {
-                    //Console.WriteLine(twice);
-                    Codes.Add(twice);
-                }
             }
             catch
             {
-                
+
             }
         }
-
     }
 }
