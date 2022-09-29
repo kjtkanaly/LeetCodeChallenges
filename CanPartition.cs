@@ -16,7 +16,12 @@ public class Solution {
         
         
         int Sum = nums.Sum();
-        Console.WriteLine("Sum: " + Sum + "\n");
+        
+        // Default II
+        if (Sum % 2 != 0)
+        {
+            return false;
+        }
         
         List<int> SubSums = new List<int>();
             
