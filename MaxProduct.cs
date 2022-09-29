@@ -6,41 +6,36 @@ public class Solution {
             return nums[0];
         }
         
-        Array.Sort(nums);
-        Console.WriteLine("Length: " + nums.Length + "\n");
-        
-        
-        int sum = nums.Where(x => x == -1).ToList().Sum();
-        Console.WriteLine(sum);
-        
         int Output = int.MinValue;
         
         int Left  = 0;
         
-        while (Left < nums.Length  && Left != -1)
+        while (Left < nums.Length)
         {
             int Right = nums.Length - 1;
             
-            while (Left <= Right)
+            if (nums[Left] != -1 && nums[Left] != 1)
             {
-                int Result = 1;
-            
-                for (int i = Left; i <= Right; i++)
+                while (Left <= Right)
                 {
-                    Result *= nums[i];
+                    int Result = 1;
+
+                    for (int i = Left; i <= Right; i++)
+                    {
+                        Result *= nums[i];
+                    }
+
+                    Console.Write("Result: " + Result + "\n");
+
+                    Output = Math.Max(Output, Result);
+
+                    Right--;
                 }
-
-                //Console.Write("Result: " + Result + "\n");
-
-                Output = Math.Max(Output, Result);
-                
-                Right--;
             }
             
-            Left++;
-            //Left = Array.FindIndex(nums, Left + 1, x => x > nums[Left]);
             
-            Console.Write("Left: " + Left + "\n");
+            
+            Left++;
         }
         
         Console.Write("\n");
