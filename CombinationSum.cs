@@ -2,16 +2,7 @@ public class Solution {
     
     public IList<IList<int>> Result = new List<IList<int>>();
     
-    public IList<IList<int>> CombinationSum(int[] Cand, int target) {
-        
-        // Debug
-        List<int> Test1 = new List<int>(3){1,2,3};
-        List<int> Test2 = new List<int>(3){1,2,3,4}; //{4,5,6};
-        
-        var One = Test1.Except(Test2).ToList();
-        var Two = Test2.Except(Test1).ToList();
-        
-        Console.WriteLine(One.Count + ", " + Two.Count);
+    public IList<IList<int>> CombinationSum(int[] Cand, int target) {        
         
         List<int> Temp = Cand.ToList();
         Temp.Sort();
@@ -19,19 +10,15 @@ public class Solution {
         
         Tree(Cand, target, new List<int>());
         
-        // The probelm is in here with how I'm removing duplicates
         int Left = 0;
         while (Left < Result.Count)
         {
-            Console.WriteLine(Result.Count);
+            //Console.WriteLine(Result.Count);
             
             int Right = Result.Count - 1;
             while (Right > Left)
-            {
-                var ListOne = Result[Left].Except(Result[Right]).ToList();
-                var ListTwo = Result[Right].Except(Result[Left]).ToList();
-                
-                if (ListOne.Count == 0 && ListTwo.Count == 0)
+            {                
+                if (Result[Left].SequenceEqual(Result[Right]))
                 {
                     Result.RemoveAt(Right);
                 }
