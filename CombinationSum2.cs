@@ -14,7 +14,6 @@ public class Solution {
             return Result;
         }
         
-        
         // Debug
         for (int i = 0; i < Cands.Count; i++)
         {
@@ -34,6 +33,11 @@ public class Solution {
         {
             Result.Add(Input);
         }
+        
+        int[] cands = new int[Cands.Count];
+        Cands.CopyTo(cands);
+        Cands = cands.ToList();
+        Cands.RemoveAll(x => x > target - Input.Sum());
         
         //for (int i = 0; i < Cands.Count; i++)
         //int i = 0;
