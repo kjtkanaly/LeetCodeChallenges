@@ -14,32 +14,33 @@ public class Solution {
             return true;
         }
         
-        int Start = 0;
-        int End   = Array.IndexOf(nums, 0);
-        
-        if (Start == End)
+        int index = Array.FindLastIndex(nums, nums.Length - 2, x => x == 0);
+
+        while (index != -1)
         {
-            return false;
-        }
-        
-        
-        // I think I need to flip the process. Start on the right and go to the left first?
-        while (End != -1)
-        {
-            for (int i = Start; i < End; i++)
+            //Console.WriteLine("Zero Index: " + index);
+            
+            if (index == 0)
             {
-                if (nums[i] > End - i)
+                return false;
+            }
+            
+            for (int Left = index - 1; Left > -1; Left--)
+            {
+                //Console.WriteLine("Distance: " + (index - Left));
+                
+                if (nums[Left] > (index - Left))
                 {
                     break;
                 }
-                if (i == End - 1)
+                
+                if (Left == 0)
                 {
                     return false;
                 }
             }
             
-            Start = End + 1;
-            End   = Array.IndexOf(nums, End + 2, 0);
+            index = Array.FindLastIndex(nums, index -1, x => x == 0);
         }
             
         return true;
