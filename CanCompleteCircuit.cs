@@ -20,7 +20,7 @@ public class Solution {
         int Tank       = 0;
         int StartIndex = 0;
         
-        for (int j = 0; j < Gas.Count; j++)
+        while (StartIndex < Gas.Count)
         {
             Tank = Gas[0];
             
@@ -39,8 +39,6 @@ public class Solution {
             
             for (int i = 1; i < Gas.Count; i++)
             {   
-                //Console.WriteLine("Tank: " + Tank);
-                
                 Tank -= Cost[i - 1];
                 
                 if (Tank <= 0)
@@ -52,27 +50,38 @@ public class Solution {
                 
                 if (i == (Gas.Count - 1) && Tank >= Cost[i])
                 {
-                    Console.WriteLine("Tank: " + Tank);
-                    Console.WriteLine("Cost: " + Cost[i]);
+                    //Console.WriteLine("Tank: " + Tank);
+                    //Console.WriteLine("Cost: " + Cost[i]);
                     
                     return StartIndex;
                 }
             } 
             
-            Gas = CircShiftCCW(Gas);
-            Cost = CircShiftCCW(Cost);
-            StartIndex++;
+            int NxtGasIndex = Gas.FindIndex(x => x != Gas[0]);
+            int NxtCostIndex = Cost.FindIndex(x => x != Cost[0]);
+            
+            if (NxtGasIndex == -1)
+            {
+                NxtGasIndex = int.MaxValue;
+            }
+            
+            if (NxtCostIndex == -1)
+            {
+                NxtCostIndex = int.MaxValue;
+            }
+            
+            int NextIndex = Math.Min(NxtGasIndex, NxtCostIndex);
+            
+            Gas.AddRange(Gas.GetRange(0, NextIndex));
+            Gas.RemoveRange(0, NextIndex);
+            
+            Cost.AddRange(Cost.GetRange(0, NextIndex));
+            Cost.RemoveRange(0, NextIndex);
+            
+            StartIndex += NextIndex;    
         }
         
         return -1;
     }
-    
-    public List<int> CircShiftCCW(List<int> Input)
-    {
-        Input.Add(Input[0]);
-        
-        Input.RemoveAt(0);
-        
-        return Input;
-    }
+
 }
