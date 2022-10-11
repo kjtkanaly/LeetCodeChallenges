@@ -12,27 +12,37 @@
  * }
  */
 public class Solution {
+    
+    public int MaxValue = 0;
+    
     public int DiameterOfBinaryTree(TreeNode root) {
         
-        int leftCount = 0;
-        int rightCount = 0;
+        Dig(root);
         
-        TreeNode Left = root, Right = root;
+        return MaxValue;
+    }
+    
+    public int Dig(TreeNode root)
+    {   
+        int Left = -1;
+        int Right = -1;
         
-        while (Left.left != null)
+        if (root.left != null)
         {
-            leftCount++;
-            Left = Left.left;
+            Left = Dig(root.left);
         }
         
-        while (Right.right != null)
+        if (root.right != null)
         {
-            rightCount++;
-            Right = Right.right;
-        }
+            Right = Dig(root.right);
+        } 
         
-        Console.WriteLine(leftCount);
+        int Height = 1 + Math.Max(Left,Right);
         
-        return (rightCount + leftCount);
+        MaxValue = Math.Max(MaxValue, Left + Right + 2);
+        
+        //Console.WriteLine("Val " + root.val + ": " + Height + " Diam: " + (Left + Right + 2));
+        
+        return Height;
     }
 }
