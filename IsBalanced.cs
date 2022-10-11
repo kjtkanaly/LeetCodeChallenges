@@ -50,8 +50,6 @@ public class Solution {
         
         int Height = 1 + Math.Max(Left,Right);
         
-        //MaxValue = Math.Max(MaxValue, Left + Right + 2);
-        
         //Console.WriteLine("Val " + root.val + ": " + Height + " -> " + Left + "," + Right);
         
         return Height;
