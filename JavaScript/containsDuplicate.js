@@ -3,14 +3,17 @@
  * @return {boolean}
  */
 
- function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
+ var containsDuplicate = function(nums) {
+    
+  for (let i = 0; i < nums.length; i++)
+  {
+      //console.log(nums[i]);
+      
+      if (nums.indexOf(nums[i], i + 1) != -1)
+      {
+          return true;
+      }
   }
   
-  
-  var containsDuplicate = function(nums) {
-      
-      var unique = nums.filter(onlyUnique);
-      
-      return (unique.length != nums.length);
-  };
+  return false;
+};
