@@ -1,22 +1,16 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         
-        left = 0
-        end = len(nums) - 1 
-        maxSum = max(nums)
+        maxSum = nums[0]
+        currentSum = 0
         
-        while (left <= end):
+        for num in nums:
 
-            right = left + 1
+            currentSum += num
 
-            while (right <= end):
-
-                maxSum = max(maxSum, sum(nums[left:right + 1]))
-
-                # print(str(sum(nums[left:right + 1])) + ": " + str(nums[left:right + 1]))
-
-                right += 1
-
-            left += 1
+            maxSum = max(maxSum, currentSum)
+            
+            if currentSum < 0:
+                currentSum = 0
 
         return maxSum
