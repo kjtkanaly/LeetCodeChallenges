@@ -1,13 +1,6 @@
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
         
-        MyList = set()
+        unique = list(set(nums))
         
-        for num in nums:
-            if num in MyList:
-                return True
-            
-            MyList.add(num)
-            
-        return False
-            
+        return not(len(unique) == len(nums))
