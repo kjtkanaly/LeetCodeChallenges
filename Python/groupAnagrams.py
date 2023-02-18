@@ -1,34 +1,20 @@
-def sortString(word):
-    sortChars = sorted(word)
-    sortWord = ""
-
-    for c in sortChars:
-        sortWord += c
-
-    return sortWord
-
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
 
-        sortStrs = []
+        output = []
+        uniqueStrs = []
 
-        for word in strs:
-            sortWord = sortString(word)
-            sortStrs.append(sortWord)
+        for string in strs:
+            sortedList = list(string)
+            sortedList.sort()
+            unqStr = ''.join(sortedList)
             
-        # Removes Duplicates
-        sortStrs = list( dict.fromkeys(sortStrs) )
+            if unqStr in uniqueStrs:
+                index = uniqueStrs.index(unqStr)
+                output[index].append(string)
+            else:
+                output.append([string])
+                uniqueStrs.append(unqStr)
 
-        Output = []
-        for keyWord in sortStrs:
-            keyList = []
-
-            for word in strs:
-                sortWord = sortString(word)
-
-                if sortWord == keyWord:
-                    keyList.append(word)
-
-            Output.append(keyList)
-
-        return Output
+        return output
+            
